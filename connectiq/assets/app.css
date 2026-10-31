@@ -1,0 +1,61 @@
+/* At 1440: 230 sidebar + 2*29 gutters + 1152 canvas. Internal columns share a 14px gap.
+   On phones, the sidebar folds and metric strips become two-column lists. */
+:root { --ground:#090909; --surface:#171717; --raised:#262626; --ink:#eeeeee;
+  --muted:#b4b4b4; --rule:#2a2a2a; --accent:#62b5e5; }
+html, body, [data-testid="stApp"], [data-testid="stAppViewContainer"] {
+  background:var(--ground); color:var(--ink); font-family:Inter,"Segoe UI",sans-serif;
+  font-variant-numeric:tabular-nums; }
+[data-testid="stHeader"] { background:var(--ground); }
+[data-testid="stMainBlockContainer"] { max-width:1500px; padding:2.6rem 29px 3rem; }
+[data-testid="stSidebar"] { background:var(--ground); border-right:1px solid var(--rule); min-width:230px; max-width:230px; }
+[data-testid="stSidebarContent"] { padding-top:1rem; }
+[data-testid="stSidebarUserContent"] { padding:0 18px; }
+.brand { display:flex; align-items:center; gap:10px; font-size:22px; font-weight:600; color:var(--ink); margin-bottom:4px; }
+.workspace { color:var(--muted); font-size:12px; margin:10px 0 28px; }
+h1 { font-size:26px !important; font-weight:600 !important; letter-spacing:-.025em; padding:0 0 8px !important; color:var(--ink) !important; }
+h2 { font-size:18px !important; font-weight:600 !important; color:var(--ink) !important; padding:8px 0 !important; }
+h3 { font-size:16px !important; font-weight:600 !important; color:var(--ink) !important; padding:6px 0 !important; }
+p, label, [data-testid="stMarkdownContainer"], [data-testid="stWidgetLabel"] { font-family:Inter,"Segoe UI",sans-serif; }
+.page-description { font-size:14px; color:var(--muted); margin:0 0 18px; }
+[data-testid="stCaptionContainer"] { color:var(--muted) !important; }
+[data-testid="stVerticalBlock"] { gap:14px; }
+[data-testid="stHorizontalBlock"] { gap:14px; }
+.metric-strip { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); background:var(--surface); border-radius:16px; overflow:hidden; margin:2px 0 4px; }
+.metric { padding:18px 20px; border-right:1px solid var(--rule); }
+.metric:last-child { border:0; }
+.metric div { font-size:12px; color:var(--muted); white-space:normal; }
+.metric strong { display:block; margin-top:8px; font-size:27px; font-weight:500; color:var(--ink); }
+.empty-state { color:var(--muted); background:var(--surface); border-radius:10px; font-size:14px; padding:18px 20px; }
+[data-testid="stVerticalBlockBorderWrapper"]>div { border-color:var(--rule) !important; border-radius:16px; }
+[data-testid="stForm"] { background:var(--surface); border:0; border-radius:16px; padding:20px; }
+[data-testid="stSidebar"] [data-testid="stButton"] button { border:0; background:transparent; text-align:left; justify-content:flex-start; padding:8px 12px; min-height:38px; color:var(--muted); border-radius:6px; }
+[data-testid="stSidebar"] [data-testid="stButton"] button[kind="primary"] { color:var(--ink); background:var(--surface); font-weight:600; }
+button[kind="primary"] { background:var(--ink) !important; color:var(--ground) !important; border:0 !important; }
+[data-testid="stButton"] button, [data-testid="stDownloadButton"] button, [data-testid="stLinkButton"] a,
+[data-testid="stFormSubmitButton"] button { border-radius:999px; font-size:14px; min-height:36px; box-shadow:none; }
+button:focus-visible, a:focus-visible { outline:2px solid var(--ink) !important; outline-offset:3px; }
+[data-baseweb="input"], [data-baseweb="select"]>div, [data-baseweb="textarea"] { background:var(--surface); color:var(--ink); border-color:var(--rule); border-radius:8px; }
+input, textarea { color:var(--ink) !important; -webkit-text-fill-color:var(--ink) !important; }
+[data-baseweb="tab-list"] { gap:20px; background:transparent; }
+[data-baseweb="tab"] { color:var(--muted); padding:6px 0; font-size:14px; }
+[data-baseweb="tab"][aria-selected="true"] { color:var(--ink); }
+[data-baseweb="tab-highlight"] { background:var(--ink); }
+[data-testid="stAlert"] { border-radius:10px; }
+.pipeline { display:flex; gap:0; padding:16px 20px; background:var(--surface); border-radius:16px; }
+.pipeline>div { flex:1; color:var(--muted); font-size:12px; }
+.pipeline strong { display:block; font-size:20px; font-weight:500; color:var(--ink); margin-top:6px; }
+.pipeline .accepted strong { color:var(--accent); }
+.shell-line { display:flex; justify-content:space-between; gap:16px; font-size:12px; color:var(--muted); border-bottom:1px solid var(--rule); padding:0 0 14px; margin-bottom:20px; }
+@media(max-width:1100px) { [data-testid="stMainBlockContainer"] { padding:2.8rem 22px 2rem; } .metric { padding:14px; } }
+@media(max-width:640px) {
+  [data-testid="stMainBlockContainer"] { padding:3rem 16px 2rem; }
+  h1 { font-size:24px !important; }
+  .metric-strip { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .metric:last-child:nth-child(odd) { grid-column:1 / -1; }
+  .metric strong { font-size:24px; }
+  .pipeline { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+  .pipeline>div:last-child:nth-child(odd) { grid-column:1 / -1; }
+  button, [data-testid="stLinkButton"] a { min-height:44px !important; }
+  .shell-line { font-size:12px; flex-wrap:wrap; }
+}
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { transition:none !important; animation:none !important; } }

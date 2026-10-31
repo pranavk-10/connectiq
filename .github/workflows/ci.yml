@@ -1,0 +1,36 @@
+name: ConnectIQ CI
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: connectiq_test
+          POSTGRES_USER: connectiq_test
+          POSTGRES_PASSWORD: ci-only-ephemeral
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U connectiq_test -d connectiq_test"
+          --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      TEST_DATABASE_URL: postgresql+psycopg://connectiq_test:ci-only-ephemeral@localhost:5432/connectiq_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check .
+      - run: pytest --cov=connectiq --cov-report=term-missing --junitxml=test-results/pytest.xml
+      - run: python scripts/smoke_startup.py
+      - run: docker build -t connectiq .
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: test-results

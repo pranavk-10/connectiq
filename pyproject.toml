@@ -1,0 +1,12 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["postgres: requires TEST_DATABASE_URL pointing to an isolated PostgreSQL database"]
+
+[tool.ruff]
+line-length = 140
+target-version = "py311"
+exclude = [".cache-wheels", ".venv", "migrations/versions"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]

@@ -1,0 +1,36 @@
+databases:
+  - name: connectiq-db
+    databaseName: connectiq
+    user: connectiq
+    plan: basic-256mb
+    region: singapore
+
+services:
+  - type: web
+    name: connectiq
+    runtime: docker
+    plan: starter
+    region: singapore
+    healthCheckPath: /_stcore/health
+    autoDeployTrigger: checksPass
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: connectiq-db
+          property: connectionString
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD_HASH
+        sync: false
+      - key: STREAMLIT_SERVER_COOKIE_SECRET
+        generateValue: true
+      - key: DEFAULT_TIMEZONE
+        value: Asia/Kolkata
+      - key: COMPANY_CSV_PATH
+        value: data/companies.csv
+      - key: PORT
+        value: 8501
+      - key: SESSION_HOURS
+        value: 8

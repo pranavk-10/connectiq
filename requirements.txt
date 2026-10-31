@@ -1,0 +1,8 @@
+streamlit==1.50.0
+SQLAlchemy==2.0.43
+pandas==2.3.2
+plotly==6.3.0
+alembic==1.16.5
+psycopg[binary]==3.2.10
+python-dotenv==1.1.1
+tzdata==2025.2
